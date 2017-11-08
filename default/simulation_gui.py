@@ -23,9 +23,10 @@ from PyQt5 import QtWidgets
 
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
+from PyQt5.Qt import QIntValidator
 
 #arguments
-_delta_time = 10
+_delta_time_default = 1
 
 class SimulationGUI(QtWidgets.QWidget):
     """
@@ -36,8 +37,10 @@ class SimulationGUI(QtWidgets.QWidget):
         self.setGeometry(0, 0, 960, 200)
         self.setWindowTitle('Sonnensystem-Simulator 2018')
         
-        self.box_starmass = QtWidgets.QLineEdit(self)
-        self.box_starmass.setGeometry(10, 10, 80, 25)
+        self.box_delta_time = QtWidgets.QLineEdit(self)
+        self.box_delta_time.setGeometry(10, 10, 80, 25)
+        self.box_delta_time.setValidator(QIntValidator())
+        self.box_delta_time.setText(_delta_time_default.__str__())
         
         self.start_button = QtWidgets.QPushButton('Start', self)
         self.start_button.setGeometry(10, 140, 60, 35)
@@ -63,7 +66,7 @@ class SimulationGUI(QtWidgets.QWidget):
         self.renderer_conn, self.simulation_conn = multiprocessing.Pipe()
         self.simulation_process = \
             multiprocessing.Process(target=systemrenderer.startup,
-                                    args=(self.simulation_conn, 0, _delta_time))
+                                    args=(self.simulation_conn, 0, float(self.box_delta_time.text())))
         self.render_process = \
             multiprocessing.Process(target=galaxy_renderer.startup,
                                     args=(self.renderer_conn, 60))
