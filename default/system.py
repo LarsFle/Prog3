@@ -21,11 +21,11 @@ class System(object):
         self.locallistmass = []
         self.stepscale = stepscale
         self.bodylist.append(body.Body(centermass, centerrad, scale, maxrad))
-        for bodys in range(1, bodyamount):
+        for _ in range(1, bodyamount):
             newmass = random.random()*(maxmass-minmass)+minmass
             newrad = random.random()*(maxrad-minrad)+minrad
             newdir = np.array((random.random()*2-1, random.random()*2-1))
-            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0))
+            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0), dtype=np.float64)
             self.bodylist.append(body.Body(newmass, newrad, scale, maxrad, newdir, newpos))
             self.locallistpos.append(newpos)
             self.locallistmass.append(newmass)

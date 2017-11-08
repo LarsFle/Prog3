@@ -35,11 +35,11 @@ class Logic:
         :return:
         """
         r2_r1 = np.subtract(other_planet.get_pos(), current_planet.get_pos())
-        result = GRAV_ACC * current_planet.get_mass() * other_planet.get_mass() / ((np.linalg.norm(r2_r1)**3) * r2_r1)
+        result = GRAV_ACC * current_planet.get_mass() * other_planet.get_mass() / (np.linalg.norm(r2_r1)**3) * r2_r1
         return result
 
     def grav_force(self, current_planet, galaxy):
-        total_grav_force = np.array((0, 0, 0), dtype=np.float16)
+        total_grav_force = np.array((0, 0, 0), dtype=np.float64)
         for body in galaxy.bodylist:
             if(body != current_planet):
                 single_force = self.single_grav_force(current_planet, body)
@@ -65,7 +65,6 @@ class Logic:
         initial_speed = dir_speed * abs_speed
         delta_speed = np.multiply(self.get_acceleration(planet, galaxy), delta_time)
         speed = np.add(initial_speed, delta_speed)
-        print('Speed: '+str(speed))
         return speed
 
 
