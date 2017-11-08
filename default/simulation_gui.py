@@ -24,6 +24,8 @@ from PyQt5 import QtWidgets
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
 
+#arguments
+_delta_time = 10
 
 class SimulationGUI(QtWidgets.QWidget):
     """
@@ -61,7 +63,7 @@ class SimulationGUI(QtWidgets.QWidget):
         self.renderer_conn, self.simulation_conn = multiprocessing.Pipe()
         self.simulation_process = \
             multiprocessing.Process(target=systemrenderer.startup,
-                                    args=(self.simulation_conn, 0, 0))
+                                    args=(self.simulation_conn, 0, _delta_time))
         self.render_process = \
             multiprocessing.Process(target=galaxy_renderer.startup,
                                     args=(self.renderer_conn, 60))

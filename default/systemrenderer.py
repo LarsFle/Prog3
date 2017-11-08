@@ -23,7 +23,7 @@ def get_body_position_and_size(galaxy):
         body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
     return body_array
 
-def startup(sim_pipe, test, test2):
+def startup(sim_pipe, test, delta_t):
     """
        Initialise and continuously update a position list.
  
@@ -42,6 +42,6 @@ def startup(sim_pipe, test, test2):
             if isinstance(message, str) and message == END_MESSAGE:
                 print('simulation exiting ...')
                 sys.exit(0)
-        galaxy.do_step(1) #Moritz: 1 als Dela Time hinzugefügt, muss eigentlich mit test2 übergeben werden
+        galaxy.do_step(delta_t) #Moritz: 1 als Dela Time hinzugefügt, muss eigentlich mit test2 übergeben werden
         bodies = get_body_position_and_size(galaxy)
         sim_pipe.send(bodies)
