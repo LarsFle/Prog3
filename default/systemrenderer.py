@@ -21,7 +21,6 @@ def get_body_position_and_size(galaxy):
         body_array[body_index][1] = galaxy.bodylist[body_index].get_pos_y()
         body_array[body_index][2] = galaxy.bodylist[body_index].get_pos_z()
         body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
-    print(body_array)
     return body_array
 
 def startup(sim_pipe, test, test2):

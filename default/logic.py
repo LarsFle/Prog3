@@ -53,7 +53,6 @@ class Logic:
         :return:
         """
         acc = np.divide(self.grav_force(planet, galaxy), planet.mass)
-        print('acceleration: '+str(acc))
         return acc
 
     def get_speed(self, planet, delta_time, galaxy):

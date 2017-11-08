@@ -77,13 +77,9 @@ def _main(argv):
     GLUT.glutInit(argv)
     GLUT.glutCreateWindow(str.encode(sys.argv[0]))
     interaction_m = InteractionMatrix()
-    print(interaction_m.get_current_matrix())
     interaction_m.add_translation(1, 2, 3)
-    print(interaction_m.get_current_matrix())
     interaction_m.add_rotation(30, 0, 0, 1)
-    print(interaction_m.get_current_matrix())
     interaction_m.add_translation(1, 2, 3)
-    print(interaction_m.get_current_matrix())
 
 if __name__ == '__main__':
     _main(sys.argv)

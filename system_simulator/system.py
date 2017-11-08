@@ -24,7 +24,6 @@ class System(object):
             self.bodylist.append(body.Body(newmass, newrad, scale, maxrad, newdir, newpos))
             self.locallistpos.append(newpos)
             self.locallistmass.append(newmass)
-        print(self.get_mass_centre())
         self.get_initial_speed()
         self.get_initial_direction()
     
@@ -70,9 +69,6 @@ class System(object):
             formr = np.linalg.norm(formr)
             summass = self.get_sum_mass()
             leftpart = ((summass-self.bodylist[bodys].get_mass())/summass)
-            print (GRAVITY_ACC)
-            print (summass)
-            print (formr)
             rightpart = math.sqrt((GRAVITY_ACC*summass)/formr)
             ispd = leftpart*rightpart
             self.bodylist[bodys].set_speed(ispd)
