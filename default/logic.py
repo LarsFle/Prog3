@@ -20,10 +20,10 @@ class Logic:
         galaxy.get_initial_direction()
         galaxy.get_initial_speed()
         speed = self.get_speed(planet, delta_time, galaxy)
-        part1 = planet.position + np.multiply(delta_time, speed)
+        part1 = planet.position + delta_time * speed
         part2 = (delta_time*delta_time)/2 * self.get_acceleration(planet, galaxy)
 
-        new_position = np.add(part1, part2)
+        new_position = part1 + part2
         #planet.position = new_position
         return new_position
 
@@ -34,7 +34,7 @@ class Logic:
         :param other_planet:
         :return:
         """
-        r2_r1 = np.subtract(other_planet.get_pos(), current_planet.get_pos())
+        r2_r1 = other_planet.get_pos() - current_planet.get_pos()
         result = GRAV_ACC * current_planet.get_mass() * other_planet.get_mass() / (np.linalg.norm(r2_r1)**3) * r2_r1
         return result
 
@@ -57,13 +57,11 @@ class Logic:
 
     def get_speed(self, planet, delta_time, galaxy):
         """mass_centre = galaxy.get_mass_centre_planet(planet)"""
-
-
         abs_speed = planet.get_speed()
         dir_speed = planet.get_dir()
         initial_speed = dir_speed * abs_speed
-        delta_speed = np.multiply(self.get_acceleration(planet, galaxy), delta_time)
-        speed = np.add(initial_speed, delta_speed)
+        delta_speed = self.get_acceleration(planet, galaxy) * delta_time
+        speed = initial_speed + delta_speed
         return speed
 
 
