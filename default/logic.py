@@ -52,7 +52,7 @@ class Logic:
         :param planet:
         :return:
         """
-        acc = np.divide(self.grav_force(planet, galaxy), planet.mass)
+        acc = self.grav_force(planet, galaxy) / planet.mass
         return acc
 
     def get_speed(self, planet, delta_time, galaxy):
