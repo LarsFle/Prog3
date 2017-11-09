@@ -86,12 +86,13 @@ class System(object):
             idir = np.cross(formr, formz)/np.linalg.norm((np.cross(formr, formz)))
             self.bodylist[bodys].set_dir(idir)
 
-
     def do_step(self, delta_time):
         self.get_initial_direction()
         self.get_initial_speed()
         system_logic = Logic()
-        for bodys in range(0, len(self.bodylist)):
+        list = []
+        for i in range(0, len(self.bodylist)):
             """do something"""
-            system_logic.planet_new_position(self.bodylist[bodys], delta_time, self)
-
+            list.append(system_logic.planet_new_position(self.bodylist[i], delta_time, self))
+        for i in range(0, len(self.bodylist)):
+            self.bodylist[i].position = list[i]

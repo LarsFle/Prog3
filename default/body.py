@@ -37,3 +37,5 @@ class Body(object):
         self.dir = direction
     def set_pos(self, pos):
         self.position = pos
+    def __copy__(self):
+        return Body(self.mass/1000, self.radius, self.scale, self.maxrad, self.dir, self.position)

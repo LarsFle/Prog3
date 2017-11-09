@@ -24,8 +24,8 @@ class Logic:
         part2 = (delta_time*delta_time)/2 * self.get_acceleration(planet, galaxy)
 
         new_position = np.add(part1, part2)
-        planet.position = new_position
-        return planet.position
+        #planet.position = new_position
+        return new_position
 
     def single_grav_force(self, current_planet, other_planet):
         """
