@@ -34,7 +34,7 @@ class SimulationGUI(QtWidgets.QWidget):
     """
     def __init__(self):
         QtWidgets.QWidget.__init__(self)
-        self.setGeometry(0, 0, 960, 200)
+        self.setGeometry(100, 100, 960, 200)
         self.setWindowTitle('Sonnensystem-Simulator 2018')
         
         self.box_delta_time = QtWidgets.QLineEdit(self)
