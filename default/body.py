@@ -24,7 +24,7 @@ class Body(object):
     def get_dir(self):
         return self.dir
     def get_pos(self):
-        return self.position/self.scale
+        return self.position
     def get_pos_x(self):
         return self.position[0]/self.scale
     def get_pos_y(self):

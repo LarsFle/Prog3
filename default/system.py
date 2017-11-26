@@ -20,6 +20,14 @@ class System(object):
         self.locallistmass = []
         self.system_logic = Logic()
         
+    def add_centre(self, body):
+        self.bodylist.append(body)
+        
+    def add_planet(self, body, pos, mass):
+        self.bodylist.append(body)
+        self.locallistpos.append(pos)
+        self.locallistmass.append(mass)
+        
     def get_sum_mass(self):
         mass = 0
         for bodys in range(0, len(self.bodylist)):
@@ -77,6 +85,7 @@ class System(object):
     def do_step(self, delta_time):
         self.get_initial_direction()
         self.get_initial_speed()
+
         list = []
         for i in range(0, len(self.bodylist)):
             """do something"""

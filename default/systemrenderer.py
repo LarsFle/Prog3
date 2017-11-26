@@ -35,7 +35,7 @@ def startup(sim_pipe, delta_t):
            nr_of_bodies (int): Number of bodies to be created and updated.
            delta_t (float): Simulation step width.
     """
-    galaxy = default_gen.generate(5, 5000, 25000, 100, 5000, 50000, 5000000, 10000)
+    galaxy = default_gen.generate(100, 5000, 25000, 100, 5000, 50000, 5000000, 10000)
     
     while True:
         if sim_pipe.poll():
