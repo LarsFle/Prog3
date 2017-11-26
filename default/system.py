@@ -89,9 +89,9 @@ class System(object):
         self.get_initial_direction()
         self.get_initial_speed()
 
-        list = []
+        lis = []
         for i in range(0, len(self.bodylist)):
             """do something"""
-            list.append(self.system_logic.planet_new_position(self.bodylist[i], delta_time, self))
+            lis.append(self.system_logic.planet_new_position(self.bodylist[i], delta_time, self))
         for i in range(0, len(self.bodylist)):
-            self.bodylist[i].position = list[i]
+            self.bodylist[i].position = lis[i]
