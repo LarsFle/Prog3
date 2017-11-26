@@ -17,8 +17,6 @@ class Logic:
         :param speed_pos:
         :return: neue Position
         """
-        galaxy.get_initial_direction()
-        galaxy.get_initial_speed()
         speed = self.get_speed(planet, delta_time, galaxy)
         part1 = planet.position + delta_time * speed
         part2 = (delta_time*delta_time)/2 * self.get_acceleration(planet, galaxy)
