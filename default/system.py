@@ -10,29 +10,16 @@ import random
 
 import numpy as np
 
-import body
 from logic import Logic
 
 GRAVITY_ACC = 6.67384*10**(-11)
 class System(object):
-    def __init__(self, bodyamount, minmass, maxmass, minrad, maxrad, scale, centermass, centerrad, stepscale):
+    def __init__(self):
         self.bodylist = []
         self.locallistpos = []
         self.locallistmass = []
-        self.stepscale = stepscale
-        self.bodylist.append(body.Body(centermass, centerrad, scale, maxrad))
-        for _ in range(1, bodyamount):
-            newmass = random.random()*(maxmass-minmass)+minmass
-            newrad = random.random()*(maxrad-minrad)+minrad
-            newdir = np.array((random.random()*2-1, random.random()*2-1))
-            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0), dtype=np.float64)
-            self.bodylist.append(body.Body(newmass, newrad, scale, maxrad, newdir, newpos))
-            self.locallistpos.append(newpos)
-            self.locallistmass.append(newmass)
-        self.get_initial_speed()
-        self.get_initial_direction()
         self.system_logic = Logic()
-    
+        
     def get_sum_mass(self):
         mass = 0
         for bodys in range(0, len(self.bodylist)):

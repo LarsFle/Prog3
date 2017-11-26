@@ -11,6 +11,7 @@ import numpy as np
 
 import system
 from simulation_constants import END_MESSAGE
+from default.generator import default_gen
 
 
 def get_body_position_and_size(galaxy):
@@ -34,8 +35,8 @@ def startup(sim_pipe, delta_t):
            nr_of_bodies (int): Number of bodies to be created and updated.
            delta_t (float): Simulation step width.
     """
-        
-    galaxy = system.System(5, 5000, 25000, 100, 5000, 50000, 5000000, 10000, 1)
+    galaxy = default_gen.generate(5, 5000, 25000, 100, 5000, 50000, 5000000, 10000)
+    
     while True:
         if sim_pipe.poll():
             message = sim_pipe.recv()
