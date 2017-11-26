@@ -17,7 +17,6 @@ class System(object):
     def __init__(self):
         self.bodylist = []
         self.locallistpos = []
-        self.locallistmass = []
         self.system_logic = Logic()
         
     def add_centre(self, body):
@@ -29,10 +28,10 @@ class System(object):
         '''
         self.bodylist.append(body)
         
-    def add_planet(self, body, pos, mass):
+    def add_planet(self, body, pos):
         self.bodylist.append(body)
         self.locallistpos.append(pos)
-        self.locallistmass.append(mass)
+        
     def get_sum_mass(self):
         mass = 0
         for bodys in range(0, len(self.bodylist)):

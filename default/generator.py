@@ -20,6 +20,6 @@ class default_gen:
             newrad = random.random()*(maxrad-minrad)+minrad
             newdir = np.array((random.random()*2-1, random.random()*2-1))
             newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0), dtype=np.float64)
-            sys.add_planet(body.Body(newmass, newrad, scale, maxrad, newdir, newpos), newpos, newmass)
+            sys.add_planet(body.Body(newmass, newrad, scale, maxrad, newdir, newpos), newpos)
         
         return sys
