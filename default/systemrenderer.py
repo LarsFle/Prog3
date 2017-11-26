@@ -17,11 +17,15 @@ from default.generator import default_gen
 def get_body_position_and_size(galaxy):
     nr_of_bodies = len(galaxy.bodylist)
     body_array = np.zeros((nr_of_bodies, 4), dtype=np.float64)
+    scale = galaxy.bodylist[0].scale
     for body_index in range(nr_of_bodies):
-        body_array[body_index][0] = galaxy.bodylist[body_index].get_pos_x()
-        body_array[body_index][1] = galaxy.bodylist[body_index].get_pos_y()
-        body_array[body_index][2] = galaxy.bodylist[body_index].get_pos_z()
-        body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
+        body_array[body_index][0] = galaxy.bodylist[body_index].get_pos_x()/scale
+        body_array[body_index][1] = galaxy.bodylist[body_index].get_pos_y()/scale
+        body_array[body_index][2] = galaxy.bodylist[body_index].get_pos_z()/scale
+        if (body_index == 0):
+            body_array[body_index][3] = 0.1
+        else:
+            body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
     return body_array
 
 def startup(sim_pipe, delta_t):
@@ -35,7 +39,8 @@ def startup(sim_pipe, delta_t):
            nr_of_bodies (int): Number of bodies to be created and updated.
            delta_t (float): Simulation step width.
     """
-    galaxy = default_gen.generate(100, 5000, 25000, 100, 5000, 50000, 5000000, 10000)
+    
+    galaxy = default_gen.generate(20, 0.33*(10**21), 568*(10**21), 2400000, 70000000, 6*(10**11), 2*(10**27), 7*(10**8))
     
     while True:
         if sim_pipe.poll():

@@ -27,7 +27,6 @@ class System(object):
         self.bodylist.append(body)
         self.locallistpos.append(pos)
         self.locallistmass.append(mass)
-        
     def get_sum_mass(self):
         mass = 0
         for bodys in range(0, len(self.bodylist)):
@@ -71,7 +70,7 @@ class System(object):
             summass = self.get_sum_mass()
             leftpart = ((summass-self.bodylist[bodys].get_mass())/summass)
             rightpart = math.sqrt((GRAVITY_ACC*summass)/formr)
-            ispd = leftpart*rightpart*10
+            ispd = leftpart*rightpart
             self.bodylist[bodys].set_speed(ispd)
 
     def get_initial_direction(self):
