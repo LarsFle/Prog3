@@ -44,27 +44,23 @@ class System(object):
         return pos
     
     def get_mass_centre(self):
-        sumx = 0
-        sumy = 0
-        sumz = 0
+        summ = np.array((0,0,0), dtype=np.float64)
+        
         totalmass = self.get_sum_mass()
         for bodys in range(0, len(self.bodylist)):
-            sumx += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_x()
-            sumy += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_y()
-            sumz += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_z()
-        return np.array((sumx/totalmass, sumy/totalmass, sumz/totalmass))
+            summ = summ + self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos()
+        summ = summ / totalmass
+        return summ
+        
 
     def get_mass_centre_planet(self, exbody):
-        sumx = 0
-        sumy = 0
-        sumz = 0
+        summ = np.array((0,0,0), dtype=np.float64)
         totalmass = self.get_sum_mass()
         for bodys in range(0, len(self.bodylist)):
             if (self.bodylist[bodys] != exbody):
-                sumx += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_x()
-                sumy += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_y()
-                sumz += self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos_z()
-        return np.array((sumx/totalmass, sumy/totalmass, sumz/totalmass))
+                summ = summ + self.bodylist[bodys].get_mass()*self.bodylist[bodys].get_pos()
+        summ = summ / totalmass
+        return summ
     
     def get_initial_speed(self):
         for bodys in range(1, len(self.bodylist)):
@@ -80,8 +76,8 @@ class System(object):
     def get_initial_direction(self):
         for bodys in range(1, len(self.bodylist)):
             """it does somehting woooohoooo!"""
-            formr = self.get_mass_centre()-self.get_mass_centre_planet(self.bodylist[bodys])
-            formz = np.array([0, 0, 1])
+            formr = np.array(self.get_mass_centre()-self.get_mass_centre_planet(self.bodylist[bodys]), dtype=np.float64)
+            formz = np.array([0, 0, 1], dtype=np.float64)
             idir = np.cross(formr, formz)/np.linalg.norm((np.cross(formr, formz)))
             self.bodylist[bodys].set_dir(idir)
 
