@@ -35,7 +35,7 @@ def startup(sim_pipe, delta_t):
            delta_t (float): Simulation step width.
     """
         
-    galaxy = system.System(5, 5000, 25000, 100, 5000, 50000, 5000000, 10000, 1)
+    galaxy = system.System(9, 0.33*(10**21), 568*(10**21), 2400000, 70000000, 6*(10**24), 2*(10**27), 7*(10**8), 1)
     while True:
         if sim_pipe.poll():
             message = sim_pipe.recv()

@@ -77,7 +77,7 @@ class System(object):
             leftpart = ((summass-self.bodylist[bodys].get_mass())/summass)
             rightpart = math.sqrt((GRAVITY_ACC*summass)/formr)
             ispd = leftpart*rightpart*10
-            self.bodylist[bodys].set_speed(ispd)
+            self.bodylist[bodys].set_speed(ispd*100)
 
     def get_initial_direction(self):
         for bodys in range(1, len(self.bodylist)):

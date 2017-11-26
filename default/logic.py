@@ -17,6 +17,8 @@ class Logic:
         :param speed_pos:
         :return: neue Position
         """
+        #galaxy.get_initial_direction()
+        #galaxy.get_initial_speed()
         speed = self.get_speed(planet, delta_time, galaxy)
         part1 = planet.position + delta_time * speed
         part2 = (delta_time*delta_time)/2 * self.get_acceleration(planet, galaxy)
@@ -41,7 +43,7 @@ class Logic:
         for body in galaxy.bodylist:
             if(body != current_planet):
                 single_force = self.single_grav_force(current_planet, body)
-                total_grav_force += single_force
+                total_grav_force = total_grav_force + single_force
         return total_grav_force
 
     def get_acceleration(self, planet, galaxy):
