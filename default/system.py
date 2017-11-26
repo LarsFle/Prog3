@@ -29,9 +29,10 @@ class System(object):
             self.bodylist.append(body.Body(newmass, newrad, scale, maxrad, newdir, newpos))
             self.locallistpos.append(newpos)
             self.locallistmass.append(newmass)
+        self.system_logic = Logic()    
         self.get_initial_speed()
         self.get_initial_direction()
-        self.system_logic = Logic()
+        self.scale = scale
     
     def get_sum_mass(self):
         mass = 0
@@ -76,8 +77,9 @@ class System(object):
             summass = self.get_sum_mass()
             leftpart = ((summass-self.bodylist[bodys].get_mass())/summass)
             rightpart = math.sqrt((GRAVITY_ACC*summass)/formr)
-            ispd = leftpart*rightpart*10
-            self.bodylist[bodys].set_speed(ispd*100)
+            ispd = leftpart*rightpart
+            #print(ispd)
+            self.bodylist[bodys].set_speed(ispd)
 
     def get_initial_direction(self):
         for bodys in range(1, len(self.bodylist)):
@@ -85,6 +87,7 @@ class System(object):
             formr = self.get_mass_centre()-self.get_mass_centre_planet(self.bodylist[bodys])
             formz = np.array([0, 0, 1])
             idir = np.cross(formr, formz)/np.linalg.norm((np.cross(formr, formz)))
+            #print(idir)
             self.bodylist[bodys].set_dir(idir)
 
     def do_step(self, delta_time):

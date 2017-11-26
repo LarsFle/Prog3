@@ -24,13 +24,13 @@ class Body(object):
     def get_dir(self):
         return self.dir
     def get_pos(self):
-        return self.position/self.scale
+        return self.position # /self.scale
     def get_pos_x(self):
-        return self.position[0]/self.scale
+        return self.position[0]#/self.scale
     def get_pos_y(self):
-        return self.position[1]/self.scale
+        return self.position[1]#/self.scale
     def get_pos_z(self):
-        return self.position[2]/self.scale
+        return self.position[2]#/self.scale
     def set_speed(self, speed):
         self.speed = speed
     def set_dir(self, direction):
