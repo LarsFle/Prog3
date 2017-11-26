@@ -42,6 +42,6 @@ def startup(sim_pipe, delta_t):
             if isinstance(message, str) and message == END_MESSAGE:
                 print('simulation exiting ...')
                 sys.exit(0)
-        galaxy.do_step(delta_t) #Moritz: 1 als Dela Time hinzugefügt, muss eigentlich mit test2 übergeben werden
+        galaxy.do_step(delta_t)
         bodies = get_body_position_and_size(galaxy)
         sim_pipe.send(bodies)
