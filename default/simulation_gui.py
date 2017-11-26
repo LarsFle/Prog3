@@ -23,7 +23,7 @@ from PyQt5 import QtWidgets
 
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
-from PyQt5.Qt import QIntValidator
+from PyQt5.Qt import QRegExp, QRegExpValidator
 
 #arguments
 _delta_time_default = 1
@@ -39,8 +39,11 @@ class SimulationGUI(QtWidgets.QWidget):
         
         self.box_delta_time = QtWidgets.QLineEdit(self)
         self.box_delta_time.setGeometry(10, 10, 80, 25)
-        self.box_delta_time.setValidator(QIntValidator())
         self.box_delta_time.setText(_delta_time_default.__str__())
+        
+        reg_ex = QRegExp("[0-9]+.?[0-9]{,4}")
+        input_validator = QRegExpValidator(reg_ex, self.box_delta_time)
+        self.box_delta_time.setValidator(input_validator)
         
         self.start_button = QtWidgets.QPushButton('Start', self)
         self.start_button.setGeometry(10, 140, 60, 35)
