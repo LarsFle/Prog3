@@ -6,7 +6,6 @@ Created on Fri Nov  3 19:32:02 2017
 @author: pyoneer
 """
 import math
-import random
 
 import numpy as np
 
