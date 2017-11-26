@@ -31,6 +31,7 @@ class System(object):
             self.locallistmass.append(newmass)
         self.get_initial_speed()
         self.get_initial_direction()
+        self.system_logic = Logic()
     
     def get_sum_mass(self):
         mass = 0
@@ -75,7 +76,7 @@ class System(object):
             summass = self.get_sum_mass()
             leftpart = ((summass-self.bodylist[bodys].get_mass())/summass)
             rightpart = math.sqrt((GRAVITY_ACC*summass)/formr)
-            ispd = leftpart*rightpart
+            ispd = leftpart*rightpart*10
             self.bodylist[bodys].set_speed(ispd)
 
     def get_initial_direction(self):
@@ -89,10 +90,9 @@ class System(object):
     def do_step(self, delta_time):
         self.get_initial_direction()
         self.get_initial_speed()
-        system_logic = Logic()
         list = []
         for i in range(0, len(self.bodylist)):
             """do something"""
-            list.append(system_logic.planet_new_position(self.bodylist[i], delta_time, self))
+            list.append(self.system_logic.planet_new_position(self.bodylist[i], delta_time, self))
         for i in range(0, len(self.bodylist)):
             self.bodylist[i].position = list[i]
