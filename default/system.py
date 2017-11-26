@@ -21,6 +21,12 @@ class System(object):
         self.system_logic = Logic()
         
     def add_centre(self, body):
+        '''
+        adds the centre shoudl be the first body added
+        
+        :param body:
+            the body object of the centre
+        '''
         self.bodylist.append(body)
         
     def add_planet(self, body, pos, mass):
