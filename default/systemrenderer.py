@@ -11,7 +11,7 @@ import numpy as np
 
 import system
 from simulation_constants import END_MESSAGE
-from default.generator import default_gen
+from generator import default_gen
 
 
 def get_body_position_and_size(galaxy):
@@ -28,7 +28,7 @@ def get_body_position_and_size(galaxy):
             body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
     return body_array
 
-def startup(sim_pipe, delta_t):
+def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, stepScale):
     """
        Initialise and continuously update a position list.
  
@@ -38,16 +38,24 @@ def startup(sim_pipe, delta_t):
            sim_pipe (multiprocessing.Pipe): Pipe to send results
            nr_of_bodies (int): Number of bodies to be created and updated.
            delta_t (float): Simulation step width.
+           (self, bodyamount, minmass, maxmass, minrad, maxrad, scale, centermass, centerrad, stepscale):
     """
-    
-    galaxy = default_gen.generate(20, 0.33*(10**21), 568*(10**21), 2400000, 70000000, 6*(10**11), 2*(10**27), 7*(10**8))
-    
+    print(bodyCount)
+    print(minMass)
+    print(maxMass)
+    print(minRad)
+    print(maxRad)
+    print(scale)
+    print(centerMass)
+    print(centerRad)
+    print(stepScale)
+    galaxy = default_gen.generate(bodyCount, minMass, maxMass, minRad, maxRad, scale, centerMass, centerRad)
     while True:
         if sim_pipe.poll():
             message = sim_pipe.recv()
             if isinstance(message, str) and message == END_MESSAGE:
                 print('simulation exiting ...')
                 sys.exit(0)
-        galaxy.do_step(delta_t)
+        galaxy.do_step(stepScale)
         bodies = get_body_position_and_size(galaxy)
         sim_pipe.send(bodies)

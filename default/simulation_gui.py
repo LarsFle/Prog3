@@ -23,53 +23,45 @@ from PyQt5 import QtWidgets
 
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
-from PyQt5.Qt import QRegExp, QRegExpValidator
+from PyQt5.Qt import QIntValidator
+from PyQt5 import  QtGui, uic, QtWidgets
 
 #arguments
 _delta_time_default = 1
 
-class SimulationGUI(QtWidgets.QWidget):
+class SimulationGUI(QtWidgets.QDialog):
     """
-        Widget with two buttons
+        Implementing simulation_ui.ui and connecting the buttons (exitProgramm does not work for some reason)
     """
     def __init__(self):
-        QtWidgets.QWidget.__init__(self)
-        self.setGeometry(100, 100, 960, 200)
-        self.setWindowTitle('Sonnensystem-Simulator 2018')
-        
-        self.box_delta_time = QtWidgets.QLineEdit(self)
-        self.box_delta_time.setGeometry(10, 10, 80, 25)
-        self.box_delta_time.setText(_delta_time_default.__str__())
-        
-        reg_ex = QRegExp("[0-9]+.?[0-9]{,4}")
-        input_validator = QRegExpValidator(reg_ex, self.box_delta_time)
-        self.box_delta_time.setValidator(input_validator)
-        
-        self.start_button = QtWidgets.QPushButton('Start', self)
-        self.start_button.setGeometry(10, 140, 60, 35)
-        self.start_button.clicked.connect(self.start_simulation)
-
-        self.stop_button = QtWidgets.QPushButton('Stop', self)
-        self.stop_button.setGeometry(100, 140, 60, 35)
-        self.stop_button.clicked.connect(self.stop_simulation)
-
-        self.quit_button = QtWidgets.QPushButton('Quit', self)
-        self.quit_button.setGeometry(190, 140, 60, 35)
-        self.quit_button.clicked.connect(self.exit_application)
-
+        QtWidgets.QDialog.__init__(self)
+        self.ui = uic.loadUi('simulator_ui.ui')
+        self.ui.startSimulation.clicked.connect(self.start_simulation)
+        self.ui.stopSimulation.clicked.connect(self.stop_simulation)
+        self.ui.exitProgramm.clicked.connect(self.exit_application)
         self.renderer_conn, self.simulation_conn = None, None
         self.render_process = None
         self.simulation_process = None
         multiprocessing.set_start_method('spawn')
-
+        
     def start_simulation(self):
         """
             Start simulation and render process connected with a pipe.
+            Collects User Input from the UI and sends it to the SystemGenerator
         """
+        bodyCount =  int(self.ui.bodyCount.text())
+        minMass  = int(self.ui.minMass.text())* (10 ** int(self.ui.minMassPot.text()))
+        maxMass  = int(self.ui.maxMass.text())* (10  ** int(self.ui.maxMassPot.text()))
+        minRad = int(self.ui.minRad.text())* (10  ** int(self.ui.minRadPot.text()))
+        maxRad = int(self.ui.maxRad.text())* (10  ** int(self.ui.maxRadPot.text()))
+        centerMass = int(self.ui.centerMass.text())* (10  ** int(self.ui.centerMassPot.text()))
+        centerRad = int(self.ui.centerRad.text())* (10 ** int(self.ui.centerRadPot.text()))
+        scale = int(self.ui.scale.text())* (10  ** int(self.ui.scalePot.text()))
+        stepScale = int(self.ui.stepScale.text())
         self.renderer_conn, self.simulation_conn = multiprocessing.Pipe()
         self.simulation_process = \
             multiprocessing.Process(target=systemrenderer.startup,
-                                    args=(self.simulation_conn, float(self.box_delta_time.text())))
+                                    args=(self.simulation_conn, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, stepScale))
         self.render_process = \
             multiprocessing.Process(target=galaxy_renderer.startup,
                                     args=(self.renderer_conn, 60))
@@ -102,7 +94,7 @@ def _main(argv):
     """
     app = QtWidgets.QApplication(argv)
     simulation_gui = SimulationGUI()
-    simulation_gui.show()
+    simulation_gui.ui.show()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

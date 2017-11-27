@@ -5,8 +5,8 @@ Created on 26.11.2017
 '''
 import numpy as np
 import random
-from default import body
-from default import system
+import body
+import system
 
 class default_gen:
     @staticmethod
