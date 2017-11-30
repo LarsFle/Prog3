@@ -229,6 +229,9 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>maximal Wert des Schiebereglers</string>
+   </property>
    <property name="text">
     <string>150</string>
    </property>
