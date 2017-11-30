@@ -28,7 +28,7 @@ def get_body_position_and_size(galaxy):
             body_array[body_index][3] = galaxy.bodylist[body_index].get_radius()
     return body_array
 
-def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, stepScale):
+def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, step_scale):
     """
        Initialise and continuously update a position list.
  
@@ -48,7 +48,7 @@ def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, c
     print(scale)
     print(centerMass)
     print(centerRad)
-    print(stepScale)
+    print(step_scale.value)
     galaxy = default_gen.generate(bodyCount, minMass, maxMass, minRad, maxRad, scale, centerMass, centerRad)
     while True:
         if sim_pipe.poll():
@@ -56,6 +56,6 @@ def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, c
             if isinstance(message, str) and message == END_MESSAGE:
                 print('simulation exiting ...')
                 sys.exit(0)
-        galaxy.do_step(stepScale)
+        galaxy.do_step(step_scale.value)
         bodies = get_body_position_and_size(galaxy)
         sim_pipe.send(bodies)

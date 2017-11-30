@@ -25,6 +25,7 @@ import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
 from PyQt5.Qt import QIntValidator, QSlider
 from PyQt5 import  QtGui, uic, QtWidgets
+from multiprocessing import Manager
 
 
 class SimulationGUI(QtWidgets.QDialog):
@@ -44,6 +45,9 @@ class SimulationGUI(QtWidgets.QDialog):
         self.simulation_process = None
         multiprocessing.set_start_method('spawn')
         
+        self.manager = Manager()
+        self.step_scale = self.manager.Value('int', 0)
+        
         self.update_slider_label()
         
     def start_simulation(self):
@@ -59,13 +63,11 @@ class SimulationGUI(QtWidgets.QDialog):
         centerMass = int(self.ui.centerMass.text())* (10  ** int(self.ui.centerMassPot.text()))
         centerRad = int(self.ui.centerRad.text())* (10 ** int(self.ui.centerRadPot.text()))
         scale = int(self.ui.scale.text())* (10  ** int(self.ui.scalePot.text()))
-        stepValue = float(self.ui.stepScale.text())
-        sliderValue = (float(self.ui.slider.value()))/99
-        stepScale = int(sliderValue*stepValue)
+        
         self.renderer_conn, self.simulation_conn = multiprocessing.Pipe()
         self.simulation_process = \
             multiprocessing.Process(target=systemrenderer.startup,
-                                    args=(self.simulation_conn, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, stepScale))
+                                    args=(self.simulation_conn, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, centerRad, scale, self.step_scale))
         self.render_process = \
             multiprocessing.Process(target=galaxy_renderer.startup,
                                     args=(self.renderer_conn, 60))
@@ -99,7 +101,8 @@ class SimulationGUI(QtWidgets.QDialog):
     def update_slider_label(self):
         stepValue = float(self.ui.stepScale.text())
         sliderValue = (float(self.ui.slider.value()))/99
-        self.ui.slider_label.setText(str(round(sliderValue*stepValue)))
+        self.step_scale.value = int(sliderValue*stepValue)
+        self.ui.slider_label.setText(str(round(self.step_scale.value)))
         
     def set_enabled_for_gen_buttons(self, value):
         self.ui.bodyCount.setEnabled(value)
