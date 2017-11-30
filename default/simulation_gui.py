@@ -59,7 +59,9 @@ class SimulationGUI(QtWidgets.QDialog):
         centerMass = int(self.ui.centerMass.text())* (10  ** int(self.ui.centerMassPot.text()))
         centerRad = int(self.ui.centerRad.text())* (10 ** int(self.ui.centerRadPot.text()))
         scale = int(self.ui.scale.text())* (10  ** int(self.ui.scalePot.text()))
-        stepScale = int(self.ui.stepScale.text())
+        stepValue = float(self.ui.stepScale.text())
+        sliderValue = (float(self.ui.slider.value()))/99
+        stepScale = int(sliderValue*stepValue)
         self.renderer_conn, self.simulation_conn = multiprocessing.Pipe()
         self.simulation_process = \
             multiprocessing.Process(target=systemrenderer.startup,
@@ -69,6 +71,8 @@ class SimulationGUI(QtWidgets.QDialog):
                                     args=(self.renderer_conn, 60))
         self.simulation_process.start()
         self.render_process.start()
+        
+        self.set_enabled_for_gen_buttons(False)
 
     def stop_simulation(self):
         """
@@ -82,6 +86,8 @@ class SimulationGUI(QtWidgets.QDialog):
         if self.render_process is not None:
             self.renderer_conn.send(END_MESSAGE)
             self.render_process = None
+            
+        self.set_enabled_for_gen_buttons(True)
 
     def exit_application(self):
         """
@@ -94,6 +100,23 @@ class SimulationGUI(QtWidgets.QDialog):
         stepValue = float(self.ui.stepScale.text())
         sliderValue = (float(self.ui.slider.value()))/99
         self.ui.slider_label.setText(str(round(sliderValue*stepValue)))
+        
+    def set_enabled_for_gen_buttons(self, value):
+        self.ui.bodyCount.setEnabled(value)
+        self.ui.minMass.setEnabled(value)
+        self.ui.minMassPot.setEnabled(value)
+        self.ui.maxMass.setEnabled(value)
+        self.ui.maxMassPot.setEnabled(value)
+        self.ui.minRad.setEnabled(value)
+        self.ui.minRadPot.setEnabled(value)
+        self.ui.maxRad.setEnabled(value)
+        self.ui.maxRadPot.setEnabled(value)
+        self.ui.centerMass.setEnabled(value)
+        self.ui.centerMassPot.setEnabled(value)
+        self.ui.centerRad.setEnabled(value)
+        self.ui.centerRadPot.setEnabled(value)
+        self.ui.scale.setEnabled(value)
+        self.ui.scalePot.setEnabled(value)
 
 def _main(argv):
     """
