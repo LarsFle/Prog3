@@ -23,11 +23,9 @@ from PyQt5 import QtWidgets
 
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
-from PyQt5.Qt import QIntValidator
+from PyQt5.Qt import QIntValidator, QSlider
 from PyQt5 import  QtGui, uic, QtWidgets
 
-#arguments
-_delta_time_default = 1
 
 class SimulationGUI(QtWidgets.QDialog):
     """
@@ -39,10 +37,14 @@ class SimulationGUI(QtWidgets.QDialog):
         self.ui.startSimulation.clicked.connect(self.start_simulation)
         self.ui.stopSimulation.clicked.connect(self.stop_simulation)
         self.ui.exitProgramm.clicked.connect(self.exit_application)
+        self.ui.slider.valueChanged.connect(self.update_slider_label)
+        self.ui.stepScale.textChanged.connect(self.update_slider_label)
         self.renderer_conn, self.simulation_conn = None, None
         self.render_process = None
         self.simulation_process = None
         multiprocessing.set_start_method('spawn')
+        
+        self.update_slider_label()
         
     def start_simulation(self):
         """
@@ -87,6 +89,11 @@ class SimulationGUI(QtWidgets.QDialog):
         """
         self.stop_simulation()
         self.close()
+        
+    def update_slider_label(self):
+        stepValue = float(self.ui.stepScale.text())
+        sliderValue = (float(self.ui.slider.value()))/99
+        self.ui.slider_label.setText(str(round(sliderValue*stepValue)))
 
 def _main(argv):
     """

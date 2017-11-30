@@ -223,10 +223,10 @@
   <widget class="QLineEdit" name="stepScale">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>190</y>
-     <width>151</width>
-     <height>41</height>
+     <x>190</x>
+     <y>200</y>
+     <width>31</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -236,7 +236,7 @@
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>220</x>
      <y>190</y>
      <width>141</width>
      <height>41</height>
@@ -512,6 +512,32 @@
    </property>
    <property name="text">
     <string>* 10 ^</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="slider_label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>190</y>
+     <width>21</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>150</string>
+   </property>
+  </widget>
+  <widget class="QSlider" name="slider">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>200</y>
+     <width>160</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>
