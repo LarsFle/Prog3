@@ -23,10 +23,9 @@ from PyQt5 import QtWidgets
 
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
-from PyQt5.Qt import QIntValidator, QSlider
+from PyQt5.Qt import QIntValidator, QSlider, QRegExp, QRegExpValidator
 from PyQt5 import  QtGui, uic, QtWidgets
 from multiprocessing import Manager
-
 
 class SimulationGUI(QtWidgets.QDialog):
     """
@@ -34,12 +33,23 @@ class SimulationGUI(QtWidgets.QDialog):
     """
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
+        
+        float_ex = QRegExp("[0-9]+[.]?[0-9]{1,2}")
+        float_validator = QRegExpValidator(float_ex)
+        
         self.ui = uic.loadUi('simulator_ui.ui')
         self.ui.startSimulation.clicked.connect(self.start_simulation)
         self.ui.stopSimulation.clicked.connect(self.stop_simulation)
         self.ui.exitProgramm.clicked.connect(self.exit_application)
+        
         self.ui.slider.valueChanged.connect(self.update_slider_label)
-        self.ui.stepScale.textChanged.connect(self.update_slider_label)
+        
+        self.ui.stepScale.editingFinished.connect(self.update_slider)
+        self.ui.stepScale.setValidator(QIntValidator())
+        
+        self.ui.slider_label.editingFinished.connect(self.slider_label_changed)
+        self.ui.slider_label.setValidator(float_validator)
+        
         self.renderer_conn, self.simulation_conn = None, None
         self.render_process = None
         self.simulation_process = None
@@ -98,11 +108,36 @@ class SimulationGUI(QtWidgets.QDialog):
         self.stop_simulation()
         self.close()
         
+    def update_slider(self):
+        step_scale = float(self.ui.stepScale.text())
+        slider_label_value = float(self.ui.slider_label.text())
+        
+        if slider_label_value == 0:
+            percentage = 0
+        else:
+            percentage = step_scale / slider_label_value
+    
+        self.ui.slider.setValue(percentage*100)
+        
     def update_slider_label(self):
         stepValue = float(self.ui.stepScale.text())
-        sliderValue = (float(self.ui.slider.value()))/99
-        self.step_scale.value = int(sliderValue*stepValue)
-        self.ui.slider_label.setText(str(round(self.step_scale.value)))
+        sliderValue = (float(self.ui.slider.value()))/100
+        self.step_scale.value = sliderValue*stepValue
+        self.ui.slider_label.setText("{0:.2f}".format(self.step_scale.value))
+        
+    def slider_label_changed(self):
+        #get value of slider label
+        self.step_scale.value = float(self.ui.slider_label.text())
+        #get value of step scale
+        stepScaleValue = float(self.ui.stepScale.text())
+        
+        if self.step_scale.value > stepScaleValue:
+            stepScaleValue = self.step_scale.value
+            self.ui.stepScale.setText(str(stepScaleValue))
+            
+        new_slider_value = self.step_scale.value/stepScaleValue*100
+        self.ui.slider.setValue(new_slider_value)
+        
         
     def set_enabled_for_gen_buttons(self, value):
         self.ui.bodyCount.setEnabled(value)
