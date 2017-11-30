@@ -112,11 +112,11 @@ class SimulationGUI(QtWidgets.QDialog):
         step_scale = float(self.ui.stepScale.text())
         slider_label_value = float(self.ui.slider_label.text())
         
-        if slider_label_value == 0:
-            percentage = 0
-        else:
-            percentage = step_scale / slider_label_value
-    
+        percentage = 0
+        
+        if slider_label_value != 0:
+            percentage = slider_label_value / step_scale
+            
         self.ui.slider.setValue(percentage*100)
         
     def update_slider_label(self):
