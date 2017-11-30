@@ -542,6 +542,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>für exakte Schrittweite</string>
+   </property>
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
