@@ -133,7 +133,7 @@ class SimulationGUI(QtWidgets.QDialog):
         
         if self.step_scale.value > stepScaleValue:
             stepScaleValue = self.step_scale.value
-            self.ui.stepScale.setText(str(stepScaleValue))
+            self.ui.stepScale.setText(str(int(round(stepScaleValue))))
             
         new_slider_value = self.step_scale.value/stepScaleValue*100
         self.ui.slider.setValue(new_slider_value)
