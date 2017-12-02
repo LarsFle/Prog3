@@ -47,12 +47,19 @@ class SimulationGUI(QtWidgets.QDialog):
         
         self.ui.bodyCount.setValidator(int_pos_validator)
         self.ui.minMass.setValidator(int_pos_validator)
+        self.ui.minMassPot.setValidator(int_pos_validator)
         self.ui.maxMass.setValidator(int_pos_validator)
+        self.ui.maxMassPot.setValidator(int_pos_validator)
         self.ui.minRad.setValidator(int_pos_validator)
+        self.ui.minRadPot.setValidator(int_pos_validator)
         self.ui.maxRad.setValidator(int_pos_validator)
+        self.ui.maxRadPot.setValidator(int_pos_validator)
         self.ui.centerMass.setValidator(int_pos_validator)
+        self.ui.centerMassPot.setValidator(int_pos_validator)
         self.ui.centerRad.setValidator(int_pos_validator)
+        self.ui.centerRadPot.setValidator(int_pos_validator)
         self.ui.scale.setValidator(int_pos_validator)
+        self.ui.scalePot.setValidator(int_pos_validator)
         
         self.ui.slider.valueChanged.connect(self.update_slider_label)
         
