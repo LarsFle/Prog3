@@ -37,15 +37,27 @@ class SimulationGUI(QtWidgets.QDialog):
         float_ex = QRegExp("[0-9]+[.]?[0-9]{1,2}")
         float_validator = QRegExpValidator(float_ex)
         
+        int_pos_ex = QRegExp("[0-9]+")
+        int_pos_validator = QRegExpValidator(int_pos_ex)
+        
         self.ui = uic.loadUi('simulator_ui.ui')
         self.ui.startSimulation.clicked.connect(self.start_simulation)
         self.ui.stopSimulation.clicked.connect(self.stop_simulation)
         self.ui.exitProgramm.clicked.connect(self.exit_application)
         
+        self.ui.bodyCount.setValidator(int_pos_validator)
+        self.ui.minMass.setValidator(int_pos_validator)
+        self.ui.maxMass.setValidator(int_pos_validator)
+        self.ui.minRad.setValidator(int_pos_validator)
+        self.ui.maxRad.setValidator(int_pos_validator)
+        self.ui.centerMass.setValidator(int_pos_validator)
+        self.ui.centerRad.setValidator(int_pos_validator)
+        self.ui.scale.setValidator(int_pos_validator)
+        
         self.ui.slider.valueChanged.connect(self.update_slider_label)
         
         self.ui.stepScale.editingFinished.connect(self.update_slider)
-        self.ui.stepScale.setValidator(QIntValidator())
+        self.ui.stepScale.setValidator(int_pos_validator)
         
         self.ui.slider_label.editingFinished.connect(self.slider_label_changed)
         self.ui.slider_label.setValidator(float_validator)
