@@ -50,6 +50,7 @@ def startup(sim_pipe, bodyCount, minMass, maxMass, minRad, maxRad, centerMass, c
     print(centerRad)
     print(step_scale.value)
     galaxy = default_gen.generate(bodyCount, minMass, maxMass, minRad, maxRad, scale, centerMass, centerRad)
+    #galaxy = default_gen.generate_solar_system()
     while True:
         if sim_pipe.poll():
             message = sim_pipe.recv()
