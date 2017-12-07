@@ -16,12 +16,15 @@ from generator import default_gen
 
 def get_body_position_and_size(galaxy):
     nr_of_bodies = len(galaxy.bodylist)
-    body_array = np.zeros((nr_of_bodies, 4), dtype=np.float64)
+    body_array = np.zeros((nr_of_bodies, 7), dtype=np.float64)
     scale = galaxy.bodylist[0].scale
     for body_index in range(nr_of_bodies):
         body_array[body_index][0] = galaxy.bodylist[body_index].get_pos_x()/scale
         body_array[body_index][1] = galaxy.bodylist[body_index].get_pos_y()/scale
         body_array[body_index][2] = galaxy.bodylist[body_index].get_pos_z()/scale
+        body_array[body_index][4] = galaxy.bodylist[body_index].r
+        body_array[body_index][5] = galaxy.bodylist[body_index].g
+        body_array[body_index][6] = galaxy.bodylist[body_index].b
         if (body_index == 0):
             body_array[body_index][3] = 0.1
         else:
