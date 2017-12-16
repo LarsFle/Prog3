@@ -19,7 +19,7 @@ class default_gen:
             newmass = random.random()*(maxmass-minmass)+minmass
             newrad = random.random()*(maxrad-minrad)+minrad
             newdir = np.array((random.random()*2-1, random.random()*2-1))
-            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0), dtype=np.float64)
+            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, (random.random()*2-1)*scale/20), dtype=np.float64)
             r = random.random()
             g = random.random()
             b = random.random()
