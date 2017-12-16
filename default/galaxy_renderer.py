@@ -117,13 +117,23 @@ class GalaxyRenderer:
                         -_CAMERA_POSITION[2])
         self.mouse_interactor.apply_transformation()
         
+        
+        
+        body = self.bodies[0, :]
+        GL.glPushMatrix()
+        GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])
+        GL.glTranslatef(body[0], body[1], body[2])
+        GL.glScalef(body[3], body[3], body[3])
+        GL.glCallList(self.sphere)
+        GL.glPopMatrix()
+        
         light_pos = list(_LIGHT_POSITION) + [1]
         GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_pos)
         GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, [1.0, 1.0, 1.0, 1.0])
         GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
         GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
         
-        for body_index in range(0,self.bodies.shape[0]):
+        for body_index in range(1,self.bodies.shape[0]):
             body = self.bodies[body_index, :]
             GL.glPushMatrix()
             GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])
