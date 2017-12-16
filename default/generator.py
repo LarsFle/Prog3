@@ -13,7 +13,7 @@ class default_gen:
     def generate(bodyamount, minmass, maxmass, minrad, maxrad, scale, centermass, centerrad):
         sys = system.System()
         
-        sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,r=0.5, g=0.3,b=0))
+        sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,r=0.5, g=0.5,b=0))
         
         for _ in range(1, bodyamount):
             newmass = random.random()*(maxmass-minmass)+minmass
