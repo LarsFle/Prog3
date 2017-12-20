@@ -10,6 +10,7 @@ import math
 import numpy as np
 
 from logic import Logic
+from _operator import pos
 
 GRAVITY_ACC = 6.67384*10**(-11)
 class System(object):
@@ -18,12 +19,23 @@ class System(object):
         self.locallistpos = []
         self.system_logic = Logic()
         
+        self.scale = 1
+        
     def add_centre(self, body):
         self.bodylist.insert(0, body)
         
     def add_planet(self, body, pos):
         self.bodylist.append(body)
         self.locallistpos.append(pos)
+        self.update_scale(pos)
+        
+    def update_scale(self, pos):
+        if abs(pos[0]) > self.scale:
+            self.scale = abs(pos[0])
+        if abs(pos[1]) > self.scale:
+            self.scale = abs(pos[1])
+        if abs(pos[2]) > self.scale:
+            self.scale = abs(pos[2])
         
     def get_sum_mass(self):
         mass = 0

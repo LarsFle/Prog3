@@ -111,6 +111,8 @@ class GalaxyRenderer:
         GL.glTranslatef(-_CAMERA_POSITION[0],
                         -_CAMERA_POSITION[1],
                         -_CAMERA_POSITION[2])
+        
+        
         self.mouse_interactor.apply_transformation()
         
         body = self.bodies[0, :]

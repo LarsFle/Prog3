@@ -23,6 +23,6 @@ class default_gen:
             r = random.random()
             g = random.random()
             b = random.random()
-            sys.add_planet(body.Body(newmass, newrad, scale, maxrad, newdir, newpos,r=r, g=g,b=b), newpos)
+            sys.add_planet(body.Body(newmass, newrad, maxrad, newdir, newpos,r=r, g=g,b=b), newpos)
         
         return sys
