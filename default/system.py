@@ -6,17 +6,26 @@ Created on Fri Nov  3 19:32:02 2017
 @author: pyoneer
 """
 import math
-
+import multiprocessing
 import numpy as np
+from FrozenSystem import FrozenSystem as FrozenSystem
+from Client import Client as Client
 
-from logic import Logic
+import logic
 
 GRAVITY_ACC = 6.67384*10**(-11)
 class System(object):
     def __init__(self):
         self.bodylist = []
         self.locallistpos = []
-        self.system_logic = Logic()
+        self.inputQueue = multiprocessing.Queue()
+        self.outputQueue = multiprocessing.JoinableQueue()
+        self.Clients = []
+        for i in range(multiprocessing.cpu_count()):
+            c = Client(i, self.outputQueue,self.inputQueue)
+            self.Clients.append(c)
+            c.createJob()
+            print('Client created ID: '+str(c.myID))
         
     def add_centre(self, body):
         self.bodylist.insert(0, body)
@@ -79,9 +88,50 @@ class System(object):
         self.get_initial_direction()
         self.get_initial_speed()
 
-        lis = []
-        for i in range(0, len(self.bodylist)):
-            """do something"""
-            lis.append(self.system_logic.planet_new_position(self.bodylist[i], delta_time, self))
-        for i in range(0, len(self.bodylist)):
-            self.bodylist[i].position = lis[i]
+        fSys = FrozenSystem()
+        fSys.deepcopySystem(self)
+
+
+
+        #for body in self.bodylist:
+            #body.move(delta_time,fSys)
+
+        l = []
+        x = 0
+        for i in range(multiprocessing.cpu_count()):
+            ls = []
+            while len(ls) <= len(self.bodylist)/multiprocessing.cpu_count():
+                if(x <len(self.bodylist)):
+                    ls.append(self.bodylist[x])
+                    x = x + 1
+                else:
+                    break
+            l.append(ls)
+
+        for lists in l:
+            stuff = (lists,delta_time,fSys)
+            self.outputQueue.put(stuff)
+
+
+        self.outputQueue.join()
+
+
+
+        blist = []
+        for i in range(len(l)):
+            lis = self.inputQueue.get()
+            for elem in lis:
+                blist.append(elem)
+
+
+
+        for bA in self.bodylist:
+            for bB in blist:
+                if bA.bodyID == bB.bodyID:
+                    bA.set_pos(bB.get_pos())
+
+
+
+
+
+

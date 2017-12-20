@@ -35,7 +35,7 @@ from simulation_constants import END_MESSAGE
 # initial window parameters
 _WINDOW_SIZE = (512, 512)
 _WINDOW_POSITION = (100, 100)
-_LIGHT_POSITION = (0, 0, 0)
+_LIGHT_POSITION = (2, 2, 3)
 _CAMERA_POSITION = (0, 0, 2)
 
 class GalaxyRenderer:
@@ -83,7 +83,11 @@ class GalaxyRenderer:
         # make sure normal vectors of scaled spheres are normalised
         GL.glEnable(GL.GL_NORMALIZE)
         GL.glEnable(GL.GL_LIGHT0)
-       
+        light_pos = list(_LIGHT_POSITION) + [1]
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_pos)
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, [1.0, 1.0, 1.0, 1.0])
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
         GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [0.2,0.2,0.2, 1])
         GL.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, [0.7, 0.7, 0.7, 1])
         GL.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, [0.1, 0.1, 0.1, 1])
@@ -116,24 +120,7 @@ class GalaxyRenderer:
                         -_CAMERA_POSITION[1],
                         -_CAMERA_POSITION[2])
         self.mouse_interactor.apply_transformation()
-        
-        
-        
-        body = self.bodies[0, :]
-        GL.glPushMatrix()
-        GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])
-        GL.glTranslatef(body[0], body[1], body[2])
-        GL.glScalef(body[3], body[3], body[3])
-        GL.glCallList(self.sphere)
-        GL.glPopMatrix()
-        
-        light_pos = list(_LIGHT_POSITION) + [1]
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_pos)
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, [1.0, 1.0, 1.0, 1.0])
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
-        
-        for body_index in range(1,self.bodies.shape[0]):
+        for body_index in range(self.bodies.shape[0]):
             body = self.bodies[body_index, :]
             GL.glPushMatrix()
             GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])

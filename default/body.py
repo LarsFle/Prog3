@@ -5,9 +5,12 @@ Created on Sat Nov  4 20:20:31 2017
 
 @author: pyoneer
 """
+import logic
 import numpy as np
+from FrozenSystem import FrozenSystem as FrozenSystem
+
 class Body(object):
-    def __init__(self, mass, radius, scale, maxrad, initdir=-1, initpos=np.array((0,0,0), dtype=np.float64), r=0.2, g=0.2, b=0.2):
+    def __init__(self, mass, radius, scale, maxrad, bodyID, initdir=-1, initpos=np.array((0,0,0), dtype=np.float64), r=0.2, g=0.2, b=0.2):
         self.mass = mass*1000
         self.radius = radius
         self.speed = 0
@@ -18,6 +21,9 @@ class Body(object):
         self.r = r
         self.g = g
         self.b = b
+        self.bodyID = bodyID
+    def get_bodyID(self):
+        return self.bodyID
     def get_mass(self):
         return self.mass
     def get_radius(self):
@@ -40,3 +46,12 @@ class Body(object):
         self.dir = direction
     def set_pos(self, pos):
         self.position = pos
+
+    def move(self,delta_time,system):
+
+        fSys = FrozenSystem()
+        fSys.deepcopySystem(system)
+        fplanet = fSys.get_FrozenPlanet(self.get_bodyID())
+
+        pos = logic.planet_new_position(fplanet,delta_time,fSys)
+        self.set_pos(pos)

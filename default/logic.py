@@ -8,8 +8,7 @@ GRAV_ACC = 6.672 * 10**(-11)
 """
 GRAV ACC = Gravitationsbeschleunigung G (2)
 """
-class Logic:
-    def planet_new_position(self, planet, delta_time, galaxy):
+def planet_new_position(planet, delta_time, galaxy):
         """
         Finale Formel, die neue Position der Planeten berechnet
         :param planet:
@@ -17,14 +16,14 @@ class Logic:
         :param speed_pos:
         :return: neue Position
         """
-        speed = self.get_speed(planet, delta_time, galaxy)
+        speed = get_speed(planet, delta_time, galaxy)
         part1 = planet.position + delta_time * speed
-        part2 = (delta_time*delta_time)/2 * self.get_acceleration(planet, galaxy)
+        part2 = (delta_time*delta_time)/2 * get_acceleration(planet, galaxy)
 
         new_position = part1 + part2
         return new_position
 
-    def single_grav_force(self, current_planet, other_planet):
+def single_grav_force(current_planet, other_planet):
         """
         to Do: Test, ob return wirklich Numpy-Array ist
         :param current_planet:
@@ -35,29 +34,29 @@ class Logic:
         result = GRAV_ACC * current_planet.get_mass() * other_planet.get_mass() / (np.linalg.norm(r2_r1)**3) * r2_r1
         return result
 
-    def grav_force(self, current_planet, galaxy):
+def grav_force(current_planet, galaxy):
         total_grav_force = np.array((0, 0, 0), dtype=np.float64)
         for body in galaxy.bodylist:
             if(body != current_planet):
-                single_force = self.single_grav_force(current_planet, body)
+                single_force = single_grav_force(current_planet, body)
                 total_grav_force = total_grav_force + single_force
         return total_grav_force
 
-    def get_acceleration(self, planet, galaxy):
+def get_acceleration(planet, galaxy):
         """
 
         :param planet:
         :return:
         """
-        acc = self.grav_force(planet, galaxy) / planet.mass
+        acc = grav_force(planet, galaxy) / planet.mass
         return acc
 
-    def get_speed(self, planet, delta_time, galaxy):
+def get_speed(planet, delta_time, galaxy):
         """mass_centre = galaxy.get_mass_centre_planet(planet)"""
         abs_speed = planet.get_speed()
         dir_speed = planet.get_dir()
         initial_speed = dir_speed * abs_speed
-        delta_speed = self.get_acceleration(planet, galaxy) * delta_time
+        delta_speed = get_acceleration(planet, galaxy) * delta_time
         speed = initial_speed + delta_speed
         return speed
 

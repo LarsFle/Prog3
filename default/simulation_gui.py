@@ -20,7 +20,6 @@ import multiprocessing
 #
 import sys
 from PyQt5 import QtWidgets
-
 import galaxy_renderer, systemrenderer
 from simulation_constants import END_MESSAGE
 from PyQt5.Qt import QIntValidator, QSlider, QRegExp, QRegExpValidator
