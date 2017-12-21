@@ -74,8 +74,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string/>
+   </property>
    <property name="text">
-    <string>33</string>
+    <string>1</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -191,11 +194,20 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>UpArrowCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;table border=&quot;0&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;&quot; cellspacing=&quot;2&quot; cellpadding=&quot;0&quot;&gt;&lt;tr&gt;&lt;td&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Material &lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Massendichte &lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td/&gt;&lt;td/&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Gase&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;0,1785 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Helium) … 1,293 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Luft) … 12,4 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Wolfram(VI)-fluorid) &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Holz&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;200 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; … 1 200 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Flüssigkeiten&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;616 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Isopentan) … 1 834 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Schwefelsäure H&lt;span style=&quot; vertical-align:sub;&quot;&gt;2&lt;/span&gt;SO&lt;span style=&quot; vertical-align:sub;&quot;&gt;4&lt;/span&gt;) … 3 119 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Brom Br&lt;span style=&quot; vertical-align:sub;&quot;&gt;2&lt;/span&gt;)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Metalle&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;534 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Lithium) … 13 595 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Quecksilber Hg) … 19 302 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Gold) … 22 590 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Osmium) &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Beton&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;1 000 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Leichtbeton) … 2 400 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (normal) … 4 500 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Schwerbeton) &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Sterne&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;1 400 kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (unsere Sonne) … 1,1 · 10&lt;span style=&quot; vertical-align:super;&quot;&gt;6&lt;/span&gt; kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (bei Heliumbrennen) … 10&lt;span style=&quot; vertical-align:super;&quot;&gt;13&lt;/span&gt; kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt; (Kernfusion schwerer Elemente) &lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Neutronenstern&lt;/p&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;10&lt;span style=&quot; vertical-align:super;&quot;&gt;17&lt;/span&gt; … 2,5 · 10&lt;span style=&quot; vertical-align:super;&quot;&gt;18&lt;/span&gt; kg/m&lt;span style=&quot; vertical-align:super;&quot;&gt;3&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;https://de.wikipedia.org/wiki/Dichte&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="toolTipDuration">
+    <number>-1</number>
+   </property>
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
    <property name="text">
-    <string>Masse der Körper</string>
+    <string>Dichte der Körper</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -276,8 +288,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string/>
+   </property>
    <property name="text">
-    <string>19</string>
+    <string>-6</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="minRadPot">
@@ -474,8 +489,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string/>
+   </property>
    <property name="text">
-    <string>21</string>
+    <string>0</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="maxMass">
@@ -488,7 +506,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>568</string>
+    <string>22</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_17">

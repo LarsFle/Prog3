@@ -12,6 +12,7 @@ from FrozenSystem import FrozenSystem as FrozenSystem
 from Client import Client as Client
 
 import logic
+from _operator import pos
 
 GRAVITY_ACC = 6.67384*10**(-11)
 class System(object):
@@ -27,12 +28,23 @@ class System(object):
             c.createJob()
             print('Client created ID: '+str(c.myID))
         
+        self.scale = 1
+        
     def add_centre(self, body):
         self.bodylist.insert(0, body)
         
     def add_planet(self, body, pos):
         self.bodylist.append(body)
         self.locallistpos.append(pos)
+        self.update_scale(pos)
+        
+    def update_scale(self, pos):
+        if abs(pos[0]) > self.scale:
+            self.scale = abs(pos[0])
+        if abs(pos[1]) > self.scale:
+            self.scale = abs(pos[1])
+        if abs(pos[2]) > self.scale:
+            self.scale = abs(pos[2])
         
     def get_sum_mass(self):
         mass = 0

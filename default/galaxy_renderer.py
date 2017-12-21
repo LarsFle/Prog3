@@ -70,12 +70,15 @@ class GalaxyRenderer:
             Initialise OpenGL settings
         """
         self.sphere = GL.glGenLists(1)
+        
+        # creates model for planet
         GL.glNewList(self.sphere, GL.GL_COMPILE)
         quad_obj = GLU.gluNewQuadric()
         GLU.gluQuadricDrawStyle(quad_obj, GLU.GLU_FILL)
         GLU.gluQuadricNormals(quad_obj, GLU.GLU_SMOOTH)
         GLU.gluSphere(quad_obj, 1, 16, 16)
         GL.glEndList()
+        
         GL.glShadeModel(GL.GL_SMOOTH)
         GL.glEnable(GL.GL_DEPTH_TEST)
         GL.glEnable(GL.GL_CULL_FACE)
@@ -83,19 +86,6 @@ class GalaxyRenderer:
         # make sure normal vectors of scaled spheres are normalised
         GL.glEnable(GL.GL_NORMALIZE)
         GL.glEnable(GL.GL_LIGHT0)
-        light_pos = list(_LIGHT_POSITION) + [1]
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_pos)
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, [1.0, 1.0, 1.0, 1.0])
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
-        GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
-        GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [0.2,0.2,0.2, 1])
-        GL.glMaterialfv(GL.GL_FRONT, GL.GL_DIFFUSE, [0.7, 0.7, 0.7, 1])
-        GL.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, [0.1, 0.1, 0.1, 1])
-        GL.glMaterialf(GL.GL_FRONT, GL.GL_SHININESS, 20)
-        GL.glMatrixMode(GL.GL_PROJECTION)
-        GL.glLoadIdentity()
-        GLU.gluPerspective(120, 1, .01, 10)
-        GL.glMatrixMode(GL.GL_MODELVIEW)
 
     def render(self):
         """
@@ -111,16 +101,35 @@ class GalaxyRenderer:
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
         GL.glMatrixMode(GL.GL_PROJECTION)
         GL.glLoadIdentity()
+        
         x_size = GLUT.glutGet(GLUT.GLUT_WINDOW_WIDTH)
         y_size = GLUT.glutGet(GLUT.GLUT_WINDOW_HEIGHT)
         GLU.gluPerspective(60, float(x_size) / float(y_size), 0.05, 10)
+        
         GL.glMatrixMode(GL.GL_MODELVIEW)
         GL.glLoadIdentity()
         GL.glTranslatef(-_CAMERA_POSITION[0],
                         -_CAMERA_POSITION[1],
                         -_CAMERA_POSITION[2])
+        
+        
         self.mouse_interactor.apply_transformation()
-        for body_index in range(self.bodies.shape[0]):
+        
+        body = self.bodies[0, :]
+        GL.glPushMatrix()
+        GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])
+        GL.glTranslatef(body[0], body[1], body[2])
+        GL.glScalef(body[3], body[3], body[3])
+        GL.glCallList(self.sphere)
+        GL.glPopMatrix()
+        
+        light_pos = list(_LIGHT_POSITION) + [1]
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_pos)
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, [1.0, 1.0, 1.0, 1.0])
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, [1.0, 1.0, 1.0, 1.0])
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, [1.0, 1.0, 1.0, 1.0])
+        
+        for body_index in range(1,self.bodies.shape[0]):
             body = self.bodies[body_index, :]
             GL.glPushMatrix()
             GL.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT, [body[4], body[5], body[6], 1])

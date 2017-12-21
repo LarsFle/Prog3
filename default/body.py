@@ -10,13 +10,12 @@ import numpy as np
 from FrozenSystem import FrozenSystem as FrozenSystem
 
 class Body(object):
-    def __init__(self, mass, radius, scale, maxrad, bodyID, initdir=-1, initpos=np.array((0,0,0), dtype=np.float64), r=0.2, g=0.2, b=0.2):
+    def __init__(self, mass, radius, maxrad, bodyID, initdir=-1, initpos=np.array((0,0,0), dtype=np.float64), r=0.2, g=0.2, b=0.2):
         self.mass = mass*1000
         self.radius = radius
         self.speed = 0
         self.dir = initdir
         self.position = initpos
-        self.scale = scale
         self.maxrad = maxrad
         self.r = r
         self.g = g

@@ -6,23 +6,37 @@ Created on 26.11.2017
 import numpy as np
 import random
 import body
-import system
+from system import System
+import math
 
 class default_gen:
     @staticmethod
     def generate(bodyamount, minmass, maxmass, minrad, maxrad, scale, centermass, centerrad):
-        sys = system.System()
+        sys = System()
         
         sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,0,r=0.5, g=0.3,b=0))
         
         for i in range(1, bodyamount):
-            newmass = random.random()*(maxmass-minmass)+minmass
+            density = random.random()*(maxmass-minmass)+minmass
+            
             newrad = random.random()*(maxrad-minrad)+minrad
+            volume = 4/3*math.pi*newrad**3
+            newmass = volume*density
+            
             newdir = np.array((random.random()*2-1, random.random()*2-1))
-            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, 0), dtype=np.float64)
+            
+            angle = 2*random.random()*math.pi
+            radius = random.random()
+            
+            x = radius * math.cos(angle)
+            y = radius * math.sin(angle)
+            
+            newpos = np.array((x*scale, y*scale, (random.random()*2-1)*scale/10), dtype=np.float64)
+            
             r = random.random()
             g = random.random()
             b = random.random()
-            sys.add_planet(body.Body(newmass, newrad, scale, maxrad, i, newdir, newpos,r=r, g=g,b=b), newpos)
+            
+            sys.add_planet(body.Body(newmass, newrad, maxrad, i, newdir, newpos, r=r, g=g, b=b), newpos)
         
         return sys
