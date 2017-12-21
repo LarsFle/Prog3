@@ -17,8 +17,13 @@ class default_gen:
         sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,r=1.0, g=1.0,b=0))
         
         for _ in range(1, bodyamount):
-            newmass = random.random()*(maxmass-minmass)+minmass
+            density = random.random()*(maxmass-minmass)+minmass
+            
             newrad = random.random()*(maxrad-minrad)+minrad
+            volume = 4/3*math.pi*newrad**3
+            newmass = volume*density
+            
+            
             newdir = np.array((random.random()*2-1, random.random()*2-1))
             
             angle = 2*random.random()*math.pi
