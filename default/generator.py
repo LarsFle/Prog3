@@ -7,6 +7,7 @@ import numpy as np
 import random
 import body
 import system
+import math
 
 class default_gen:
     @staticmethod
@@ -19,7 +20,14 @@ class default_gen:
             newmass = random.random()*(maxmass-minmass)+minmass
             newrad = random.random()*(maxrad-minrad)+minrad
             newdir = np.array((random.random()*2-1, random.random()*2-1))
-            newpos = np.array(((random.random()*2-1)*scale, (random.random()*2-1)*scale, (random.random()*2-1)*scale/10), dtype=np.float64)
+            
+            angle = 2*random.random()*math.pi
+            radius = random.random()
+            
+            x = radius * math.cos(angle)
+            y = radius * math.sin(angle)
+            
+            newpos = np.array((x*scale, y*scale, (random.random()*2-1)*scale/10), dtype=np.float64)
             r = random.random()
             g = random.random()
             b = random.random()
