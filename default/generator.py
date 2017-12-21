@@ -14,7 +14,7 @@ class default_gen:
     def generate(bodyamount, minmass, maxmass, minrad, maxrad, scale, centermass, centerrad):
         sys = System()
         
-        sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,0,r=0.5, g=0.3,b=0))
+        sys.add_centre(body.Body(centermass, centerrad, scale, maxrad,0,r=1.0, g=0.6,b=0))
         
         for i in range(1, bodyamount):
             density = random.random()*(maxmass-minmass)+minmass
